@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Automation;
 
 namespace SportsDash
 {
@@ -10,12 +11,12 @@ namespace SportsDash
     {
         //public int Id { get; set; }
         private String userName { get; set; }
-        private int wins { get; set; }
-        private int losses { get; set; }
-        private int gamesPlayed { get; set; }
-        private float totalEarn { get; set; }
-        private float totalLost { get; set; }
-        private float net { get; set; }
+        private int wins { get; set; } = 0;
+        private int losses { get; set; } = 0;
+        private int gamesPlayed { get; set; } = 0;
+        private float totalEarn { get; set; } = 0.00F;
+        private float totalLost { get; set; } = 0.00F;
+        private float net { get; set; } = 0;
 
         // Used for new accounts
         public User(String userName)
@@ -23,7 +24,7 @@ namespace SportsDash
             this.userName= userName;
         }
 
-        // Used to add existing accounts th at lost data
+        // Used to add existing accounts that lost data
         public User(String userName, int wins, int losses, int gamesPlayed, float totalEarn, float totalLost)
         {
             this.userName = userName;
@@ -54,6 +55,27 @@ namespace SportsDash
         {
             totalLost -= loss;
         }
+
+        public void addGamesPlayed()
+        {
+            gamesPlayed++;
+        }
+
+        public void updateNet()
+        {
+            net = totalEarn - totalLost;
+        }
+
+        public void changeTotalEarn(float earned)
+        {
+            totalEarn += earned;
+        }
+
+        public void changeTotalLost(float loss)
+        {
+            totalLost -= loss;
+        }
+
         public override String ToString()
         {
             return "User:\nUsername: " + userName + "\nWins: " + wins + "\nLosses: " + losses + "\nGames Played: " + gamesPlayed + "\nTotal Earned: " + totalEarn + "\nTotal Lost: " + totalLost + "\nNet: " + net;

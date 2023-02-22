@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\logo-black.png" />
+    <None Remove="Images\logo-color.png" />
+    <None Remove="Images\logo-no-background.png" />
+    <None Remove="Images\logo-white.png" />
+    <None Remove="Images\menu_icon.png" />
+    <None Remove="Images\sports-dash-background.png" />
+    <None Remove="Images\sports-dash-color-transparent.png" />
+    <None Remove="Images\sports-dash-high-resolution-logo-color-on-transparent-background.png" />
+    <None Remove="Images\sports-dash-website-favicon-color.png" />
+    <None Remove="Images\sports-dash-white-transparent.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Styles\" />
+    <Folder Include="Windows\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\sports-dash-background.png" />
+    <Resource Include="Images\logo-black.png" />
+    <Resource Include="Images\logo-color.png" />
+    <Resource Include="Images\logo-no-background.png" />
+    <Resource Include="Images\logo-white.png" />
+    <Resource Include="Images\menu_icon.png" />
+    <Resource Include="Images\sports-dash-color-transparent.png" />
+    <Resource Include="Images\sports-dash-high-resolution-logo-color-on-transparent-background.png" />
+    <Resource Include="Images\sports-dash-website-favicon-color.png" />
+    <Resource Include="Images\sports-dash-white-transparent.png" />
+  </ItemGroup>
+
+</Project>

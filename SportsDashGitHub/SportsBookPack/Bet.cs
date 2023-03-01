@@ -6,7 +6,8 @@ namespace SportsDash.SportsBookPack
         private float wager { get; set; }
         private float winnings { get; set; }
         private int odds { get; set; }
-        private string game { get; set; }
+        private string team1 { get; set; }
+        private string team2 { get; set; }
         private string gameWinner { get; set; }
         private bool betWin { get; set; } = false;
         private bool openBet { get; set; } = true;
@@ -18,12 +19,13 @@ namespace SportsDash.SportsBookPack
             this.winnings = winnings;
         }
 
-        public Bet(float wager, int odds, float winnings, string game, string gameWinner, bool betWin, bool openBet)
+        public Bet(float wager, int odds, float winnings, string team1, string team2, string gameWinner, bool betWin, bool openBet)
         {
             this.wager = wager;
             this.odds = odds;
             this.winnings = winnings;
-            this.game = game;
+            this.team1 = team1;
+            this.team2 = team2;
             this.gameWinner = gameWinner;
             this.betWin = betWin;
             this.openBet = openBet;
@@ -51,7 +53,7 @@ namespace SportsDash.SportsBookPack
 
         public override string ToString()
         {
-            return "Bet:\nGame: " + game + " | Game Winner: " + gameWinner + " | Wager: " + wager + " | Odds: " + odds +
+            return "Bet:\nTeam 1: " + team1+ " | Team 2: " + team2 + " | Game Winner: " + gameWinner + " | Wager: " + wager + " | Odds: " + odds +
                 " | Bet Win: " + betWin + " | Open Bet: " + openBet;
         }
 

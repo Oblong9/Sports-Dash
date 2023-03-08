@@ -7,6 +7,36 @@
              mc:Ignorable="d" 
              d:DesignHeight="725" d:DesignWidth="1400">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Foreground="White" FontSize="40" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0">
+                Active Bets
+            </Label>
+
+            <Label Foreground="White" FontSize="40" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1">
+                Past Bets
+            </Label>
+        </Grid>
+        
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+        </Grid>
+        
+
+
+
     </Grid>
 </UserControl>

@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:SportsDash"
              xmlns:viewModel="clr-namespace:SportsDash.ViewModel"
              xmlns:view="clr-namespace:SportsDash.View"
-             StartupUri="MainWindow.xaml">
+             StartupUri="/View/LoginView.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

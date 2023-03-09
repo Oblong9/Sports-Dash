@@ -119,8 +119,6 @@
                             Content="{Binding CurrentView}"
                             />
 
-           
-
         </Grid>
     </Border>
 

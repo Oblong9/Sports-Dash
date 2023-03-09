@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace SportsDash.View
 {
     /// <summary>
-    /// Interaction logic for LoginView.xaml
+    /// Interaction logic for SignupView.xaml
     /// </summary>
-    public partial class LoginView : Window
+    public partial class SignupView : Window
     {
-        public LoginView()
+        public SignupView()
         {
             InitializeComponent();
         }
@@ -28,13 +28,6 @@ namespace SportsDash.View
         {
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
-            this.Hide();
-        }
-
-        private void SignUpButton_Click(object sender, RoutedEventArgs e)
-        {
-            SignupView signupView = new SignupView();
-            signupView.Show();
             this.Hide();
         }
 

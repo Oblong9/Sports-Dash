@@ -18,7 +18,11 @@
             <DataTemplate DataType="{x:Type viewModel:BetVM}">
                 <view:BetView/>
             </DataTemplate>
-            
+
+            <DataTemplate DataType="{x:Type viewModel:StatsVM}">
+                <view:StatView/>
+            </DataTemplate>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

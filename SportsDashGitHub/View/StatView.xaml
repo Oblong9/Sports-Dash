@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="SportsDash.View.StatView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SportsDash.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="725" d:DesignWidth="1400">
+    <StackPanel>
+        
+        <Label Content="Bet History"
+               Foreground="White"
+               FontSize="20"
+               FontWeight="Bold"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Margin="10"
+               />
+
+        <Border BorderThickness="1"
+                BorderBrush="White">
+            <ScrollViewer   Height="350"
+                        Margin="5, 20, 0, 20"
+                        VerticalScrollBarVisibility="Auto">
+                <Grid Margin="0, 0, 5, 0"
+                      ShowGridLines="True"
+                      >
+
+
+                </Grid>
+            </ScrollViewer>
+        </Border>
+        
+        <Grid Margin="5, 20, 5, 20">
+
+        </Grid>
+
+        <!-- Scroll Viewer Like the Comp 269 Project-->
+        
+            
+    </StackPanel>
+</UserControl>

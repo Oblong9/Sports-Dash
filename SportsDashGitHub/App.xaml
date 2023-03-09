@@ -1,0 +1,28 @@
+﻿<Application x:Class="SportsDash.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SportsDash"
+             xmlns:viewModel="clr-namespace:SportsDash.ViewModel"
+             xmlns:view="clr-namespace:SportsDash.View"
+             StartupUri="/View/LoginView.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/MenuStyle.xaml"/>
+                <ResourceDictionary Source="Styles/HomeTeamStyle.xaml"/>
+                <ResourceDictionary Source="Styles/AwayTeamStyle.xaml"/>
+                <ResourceDictionary Source="Styles/ComboBoxStyle.xaml"/>
+                <ResourceDictionary Source="Styles/MoreTextBoxStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate DataType="{x:Type viewModel:BetVM}">
+                <view:BetView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:StatsVM}">
+                <view:StatView/>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SportsDash.View"
+        xmlns:viewModel="clr-namespace:SportsDash.ViewModel"
         mc:Ignorable="d"
         Title="SignupView" Height="800" Width="1400"
         WindowStartupLocation="CenterScreen"
@@ -13,6 +14,10 @@
         WindowStyle="None"
         ResizeMode="CanMinimize">
 
+    <Window.DataContext>
+        <viewModel:SignupVM/>
+    </Window.DataContext>
+    
     <Grid>
         <Border CornerRadius="10">
             <Border.Background>
@@ -66,13 +71,30 @@
                            HorizontalAlignment="Center"
                            FontSize="26"/>
 
-                    <TextBox
+                    <Border CornerRadius="10"
+                            Background="#404040"
+                            Width="400"
+                            Height="50">
+
+                        <TextBox
                          x:Name="EmailTextBox"
+                         Width="400"
+                         Height="50"
                          Grid.Column="0"
                          Grid.Row="1"
+                         BorderThickness="0"
+                         Padding="10"
+                         Margin="1"
+                         VerticalContentAlignment="Center"
+                         HorizontalContentAlignment="Center"
+                         Background="Transparent"
+                         Foreground="White"
                          HorizontalAlignment="Center"
-                         Style="{StaticResource LoginTextBox}"
+                         FontSize="20"
+                         Text="{Binding Email}"
                          />
+
+                    </Border>
 
                 </StackPanel>
 
@@ -82,13 +104,31 @@
                            HorizontalAlignment="Center"
                            FontSize="26"/>
 
-                    <TextBox
+                    <Border CornerRadius="10"
+                            Background="#404040"
+                            Width="400"
+                            Height="50">
+                        
+                        <TextBox
                          x:Name="UsernameTextBox"
+                         Width="400"
+                         Height="50"
                          Grid.Column="0"
                          Grid.Row="1"
+                         BorderThickness="0"
+                         Padding="10"
+                         Margin="1"
+                         VerticalContentAlignment="Center"
+                         HorizontalContentAlignment="Center"
+                         Background="Transparent"
+                         Foreground="White"
                          HorizontalAlignment="Center"
-                         Style="{StaticResource LoginTextBox}"
+                         FontSize="20"
+                         
+                         Text="{Binding Username}"
                          />
+                        
+                    </Border>
 
                 </StackPanel>
 
@@ -98,13 +138,31 @@
                            HorizontalAlignment="Center"
                            FontSize="26"/>
 
-                    <TextBox
+                    <Border CornerRadius="10"
+                            Background="#404040"
+                            Width="400"
+                            Height="50">
+
+                        <!-- Change to password box later-->
+                        <TextBox
                          x:Name="PasswordTextBox"
                          Grid.Column="0"
                          Grid.Row="1"
+                         Width="400"
+                         Height="50"
+                         BorderThickness="0"
+                         Padding="10"
+                         Margin="1"
+                         VerticalContentAlignment="Center"
+                         HorizontalContentAlignment="Center"
+                         Background="Transparent"
+                         Foreground="White"
                          HorizontalAlignment="Center"
-                         Style="{StaticResource LoginTextBox}"
+                         FontSize="20"
+                         Text="{Binding Password}"
                          />
+
+                    </Border>
 
                 </StackPanel>
 
@@ -117,7 +175,8 @@
                         Foreground="White"
                         FontWeight="Bold"
                         FontSize="20"
-                        Margin="0, 15, 0, 0">
+                        Margin="0, 15, 0, 0"
+                        Command="{Binding SubmitSignupButton}">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Background" Value="#356E3B"/>

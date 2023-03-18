@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SportsDash.ViewModel
+﻿namespace SportsDash.ViewModel
 {
     class MainVM : ObservableObject
     {
@@ -21,7 +15,12 @@ namespace SportsDash.ViewModel
 
         public StatsVM StatsVM { get; set; }
 
+        private object lastView;
+
         private object _currentView;
+
+        // Ability to check last viewed pages
+        // CREATE STACK TO SEE LAST PAGES
 
         public object CurrentView
         {
@@ -40,22 +39,25 @@ namespace SportsDash.ViewModel
             StatsVM = new StatsVM();
 
             CurrentView = DashboardVM;
+            lastView = DashboardVM;
 
             DashboardViewCommand = new RelayCommand(o =>
             {
+                //lastView = CurrentView;
                 CurrentView = DashboardVM;
             });
 
             BetViewCommand = new RelayCommand(o =>
             {
+                //lastView = CurrentView;
                 CurrentView = BetVM;
             });
 
             StatsViewCommand = new RelayCommand(o =>
             {
+                //lastView = CurrentView;
                 CurrentView = StatsVM;
             });
-
         }
     }
 }

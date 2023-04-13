@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SportsDash.View"
-        xmlns:viewModel="clr-namespace:SportsDash.ViewModel"
+        xmlns:viewModel="clr-namespace:SportsDash.ViewModel" 
         mc:Ignorable="d"
         Title="SignupView" Height="800" Width="1400"
         WindowStartupLocation="CenterScreen"
@@ -17,7 +17,7 @@
     <Window.DataContext>
         <viewModel:SignupVM/>
     </Window.DataContext>
-    
+
     <Grid>
         <Border CornerRadius="10">
             <Border.Background>
@@ -108,7 +108,7 @@
                             Background="#404040"
                             Width="400"
                             Height="50">
-                        
+
                         <TextBox
                          x:Name="UsernameTextBox"
                          Width="400"
@@ -127,7 +127,7 @@
                          
                          Text="{Binding Username}"
                          />
-                        
+
                     </Border>
 
                 </StackPanel>
@@ -166,50 +166,86 @@
 
                 </StackPanel>
 
-                <Button x:Name="SignUpButton"
+                <StackPanel Grid.Row="4" Margin="0, 20, 0, 0">
+                    <Button x:Name="SignUpButton"
                         Content="Sign Up"
-                        Width="250"
+                        Width="300"
                         Height="50"
                         Grid.Row="4"
                         HorizontalAlignment="Center"
                         Foreground="White"
                         FontWeight="Bold"
                         FontSize="20"
-                        Margin="0, 15, 0, 0"
                         Command="{Binding SubmitSignupButton}">
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Background" Value="#356E3B"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Border Background="{TemplateBinding Background}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#36873E"/>
-                                    <Setter Property="Cursor" Value="Hand"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="#356E3B"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Background="{TemplateBinding Background}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#36873E"/>
+                                        <Setter Property="Cursor" Value="Hand"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
 
+                    <StackPanel Margin="0, 20, 0, 10">
+                        <Label Content="Have an account? Log in here:"
+                           Foreground="White"
+                           HorizontalAlignment="Center"
+                           FontSize="20"
+                       />
+
+                        <Button x:Name="LoginButton"
+                        Grid.Row="3"
+                        Content="Sign In"
+                        Width="250"
+                        Height="40"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Foreground="White"
+                        FontWeight="Bold"
+                        FontSize="20"
+                        Command="{Binding SubmitLoginButton}">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="Background" Value="#4642AB"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type Button}">
+                                                <Border Background="{TemplateBinding Background}">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#404CD1"/>
+                                            <Setter Property="Cursor" Value="Hand"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </StackPanel>
+
+
+                </StackPanel>
 
             </Grid>
         </Border>
-
-        <Button x:Name="SneakyButton" 
-                Content="Sneaky Button"
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="Right"
-                Margin="25" Click="SneakyButton_Click"
-                />
-
+        
         <Button Content="Exit" 
                 FontSize="18" 
                 Grid.Row="1"

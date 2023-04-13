@@ -4,39 +4,59 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SportsDash.View"
+             xmlns:vm="clr-namespace:SportsDash.ViewModel" d:DataContext="{d:DesignInstance Type=vm:StatsVM}"
              mc:Ignorable="d" 
              d:DesignHeight="725" d:DesignWidth="1400">
     <StackPanel>
-        
+
         <Label Content="Bet History"
                Foreground="White"
-               FontSize="20"
+               FontSize="24"
                FontWeight="Bold"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
-               Margin="10"
+               Margin="5"
                />
 
-        <Border BorderThickness="1"
-                BorderBrush="White">
-            <ScrollViewer   Height="350"
-                        Margin="5, 20, 0, 20"
-                        VerticalScrollBarVisibility="Auto">
-                <Grid Margin="0, 0, 5, 0"
-                      ShowGridLines="True"
-                      >
+        <ListView ItemsSource="{Binding DBContent}"
+                  Background="Transparent"
+                  Margin="5, 0, 5, 0"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  BorderBrush="Transparent">
+            
+            <ListView.View>
+                
+                <GridView>
 
+                    <GridView.ColumnHeaderContainerStyle>
+                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="Padding" Value="5"/>
+                            <Setter Property="BorderBrush" Value="White"/>
+                        </Style>
+                    </GridView.ColumnHeaderContainerStyle>
 
-                </Grid>
-            </ScrollViewer>
-        </Border>
-        
+                    <GridViewColumn DisplayMemberBinding="{Binding wager}" Header="Wager" Width="175"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding odds}" Header="Odds" Width="175"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding winnings}" Header="Winnings" Width="175"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding league}" Header="League" Width="150"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding team1}" Header="Home Team" Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding team2}" Header="Away Team" Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding gameWinner}" Header="Game Winner" Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding betWin}" Header="Bet Won?" Width="100"/>
+                </GridView>
+                
+            </ListView.View>
+            
+        </ListView>
+
         <Grid Margin="5, 20, 5, 20">
 
         </Grid>
 
-        <!-- Scroll Viewer Like the Comp 269 Project-->
-        
-            
     </StackPanel>
 </UserControl>

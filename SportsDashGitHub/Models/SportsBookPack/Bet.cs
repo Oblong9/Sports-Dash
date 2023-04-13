@@ -1,34 +1,65 @@
-﻿namespace SportsDash.Models.SportsBookPack
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
+using SportsDash.Models.UserPack;
+
+namespace SportsDash.Models.SportsBookPack
 {
     public class Bet
     {
-        private float wager { get; set; }
-        private float winnings { get; set; }
-        private int odds { get; set; }
-        private string team1 { get; set; }
-        private string team2 { get; set; }
-        private string gameWinner { get; set; }
-        private bool betWin { get; set; } = false;
-        private bool openBet { get; set; } = true;
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string id { get; set; }
 
-        public Bet(float wager, int odds, float winnings)
+        [BsonElement("user")]
+        public string user { get; set; }
+
+        [BsonElement("wager")]
+        public float wager { get; set; }
+
+        [BsonElement("winnings")]
+        public float winnings { get; set; }
+
+        [BsonElement("odds")]
+        public int odds { get; set; }
+
+        [BsonElement("league")]
+        public string league { get; set; }
+
+        [BsonElement("homeTeam")]
+        public string team1 { get; set; }
+
+        [BsonElement("awayTeam")]
+        public string team2 { get; set; }
+
+        [BsonElement("gameWinner")]
+        public string gameWinner { get; set; }
+
+        [BsonElement("betWin")]
+        public bool betWin { get; set; } = false;
+
+        public Bet(float wager, int odds, float winnings, string league, string team1, string team2, string gameWinner, bool betWin)
         {
             this.wager = wager;
             this.odds = odds;
             this.winnings = winnings;
-        }
-
-        public Bet(float wager, int odds, float winnings, string team1, string team2, string gameWinner, bool betWin, bool openBet)
-        {
-            this.wager = wager;
-            this.odds = odds;
-            this.winnings = winnings;
+            this.league = league;
             this.team1 = team1;
             this.team2 = team2;
             this.gameWinner = gameWinner;
             this.betWin = betWin;
-            this.openBet = openBet;
-            this.betWin = openBet;
+            this.user = Account.GLOBALUSERNAME;
+        }
+
+        public Bet(float wager, int odds, string league, string team1, string team2, string gameWinner, bool betWin)
+        {
+            this.wager = wager;
+            this.odds = odds;
+            this.league = league;
+            this.team1 = team1;
+            this.team2 = team2;
+            this.gameWinner = gameWinner;
+            this.betWin = betWin;
+            this.user = Account.GLOBALUSERNAME;
         }
 
         // Function for calculating the amount won including the wager
@@ -52,8 +83,8 @@
 
         public override string ToString()
         {
-            return "Bet:\nTeam 1: " + team1 + " | Team 2: " + team2 + " | Game Winner: " + gameWinner + " | Wager: " + wager + " | Odds: " + odds +
-                " | Bet Win: " + betWin + " | Open Bet: " + openBet;
+            return "Bet:\nUser: " + user + " | Team 1: " + team1 + " | Team 2: " + team2 + " | Game Winner: " + gameWinner + " | Wager: " + wager + " | Odds: " + odds +
+                " | Bet Win: " + betWin;
         }
 
 

@@ -1,4 +1,6 @@
-﻿namespace SportsDash.ViewModel
+﻿using SportsDash.Models.UserPack;
+
+namespace SportsDash.ViewModel
 {
     class MainVM : ObservableObject
     {
@@ -14,6 +16,9 @@
         public BetVM BetVM { get; set; }
 
         public StatsVM StatsVM { get; set; }
+
+        // Check for linking accounts
+        private Account currentUser { get; set; }
 
         private object lastView;
 
@@ -32,9 +37,12 @@
             }
         }
 
-        public MainVM()
+        public MainVM(Account loadedUser)
         {
-            BetVM = new BetVM();
+            // Display the user then work from there to find here the username = a
+            // username from the place and maybe use a second collection to have bet data and link by username
+            currentUser = loadedUser;
+            BetVM = new BetVM(currentUser);
             DashboardVM = new DashboardVM();
             StatsVM = new StatsVM();
 

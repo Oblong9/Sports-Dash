@@ -7,9 +7,15 @@
              xmlns:vm="clr-namespace:SportsDash.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="725" d:DesignWidth="1400">
+    <UserControl.Resources>
+        <vm:RadioButtonToBool x:Key="RadioButtonToBool"/>
+    </UserControl.Resources>
+    <!--
     <UserControl.DataContext>
         <vm:BetVM/>
     </UserControl.DataContext>
+    -->
+   
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -50,11 +56,14 @@
                   HorizontalContentAlignment="Center"
                   VerticalContentAlignment="Center"
                   Cursor="Hand"
-                  Foreground="White">
-                <ComboBoxItem Content="NHL"/>
-                <ComboBoxItem Content="NBA"/>
+                  Foreground="White"
+                  ItemsSource="{Binding Path=Leagues}"
+                  SelectedItem="{Binding Path=selectedLeague}">
+                <!--<ComboBoxItem Content="NHL"/>
+                <ComboBoxItem Content="NBA"/> -->
             </ComboBox>
         </Grid>
+        
         <!-- Teams Grid -->
         <Grid Grid.Column="1"
               Grid.Row="0">
@@ -83,28 +92,102 @@
                            Grid.Column="1"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"/>
+            
+            <!-- Home Team-->
+            <Border CornerRadius="10"
+                    Grid.Column="0"
+                    Grid.Row="1"
+                     Background="#404040"
+                            Width="200"
+                            Height="50">
 
+                <Grid>
+                    <!-- -->
+                    <TextBox Margin="1"
+                                     Text="{Binding Team1}"
+                                     BorderThickness="0"
+                                     Padding="10"
+                                     VerticalContentAlignment="Center"
+                                     HorizontalContentAlignment="Center"
+                                     Background="Transparent"
+                                     Foreground="White"
+                                     x:Name="HomeTeam"
+                                     FontSize="20"
+                                     />
 
-            <TextBox Width="200"
-                         Height="50"
-                         x:Name="team1"
-                         Grid.Column="0"
-                         Grid.Row="1"
-                         HorizontalAlignment="Center"
-                         Style="{StaticResource HomeTeamTextBox}"
-                         Text="{Binding Team1}"
-                         />
+                    <TextBlock IsHitTestVisible="False"
+                                       Text="Home Team"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Margin="10, 0, 0, 0"
+                                       FontSize="20"
+                                       Foreground="DarkGray"
+                                       Grid.Column="1">
 
-            <TextBox Width="200"
-                         Height="50"
-                         x:Name="team2"
-                         Grid.Column="2"
-                         Grid.Row="1"
-                         HorizontalAlignment="Center"
-                         Style="{StaticResource AwayTeamTextBox}"
-                         Text="{Binding Team2}"
-                         />
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=HomeTeam}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </Style>
+                        </TextBlock.Style>
+
+                    </TextBlock>
+                </Grid>
+
+            </Border>
+
+            <!-- Away Team-->
+            <Border CornerRadius="10"
+                    Grid.Column="2"
+                    Grid.Row="1"
+                     Background="#404040"
+                            Width="200"
+                            Height="50">
+
+                <Grid>
+                    
+                    <TextBox Margin="1"
+                                     Text="{Binding Team2}"
+                                     BorderThickness="0"
+                                     Padding="10"
+                                     VerticalContentAlignment="Center"
+                                     HorizontalContentAlignment="Center"
+                                     Background="Transparent"
+                                     Foreground="White"
+                                     x:Name="AwayTeam"
+                                     FontSize="20"
+                                     />
+
+                    <TextBlock IsHitTestVisible="False"
+                                       Text="Away Team"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Margin="10, 0, 0, 0"
+                                       FontSize="20"
+                                       Foreground="DarkGray"
+                                       Grid.Column="1">
+
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=AwayTeam}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </Style>
+                        </TextBlock.Style>
+
+                    </TextBlock>
+                </Grid>
+
+            </Border>
         </Grid>
+        
         
         <!--Winner Grid-->
         <Grid Grid.Column="2"
@@ -121,7 +204,6 @@
                 Winner
             </Label>
 
-            <!-- Remove hardcode connect to VM-->
             <ComboBox ItemContainerStyle="{DynamicResource ComboBoxItemContainerStyle1}" Template="{DynamicResource LeagueBox}"
                   x:Name="winner"
                   Grid.Row="1"
@@ -134,9 +216,12 @@
                   HorizontalContentAlignment="Center"
                   VerticalContentAlignment="Center"
                   Cursor="Hand"
-                  Foreground="White">
-                <ComboBoxItem Content="Team 1"/>
-                <ComboBoxItem Content="Team 2"/>
+                  Foreground="White"
+                  SelectedValue="{Binding SelectedTeam}">
+                <!-- Grab the two teams from the betVM and them to the combobox source
+                     Then create the selectedd team like the league combobox-->
+                <ComboBoxItem Content="{Binding Team1}"/>
+                <ComboBoxItem Content="{Binding Team2}"/>
             </ComboBox>
         </Grid>
 
@@ -157,15 +242,60 @@
                            HorizontalAlignment="Center"
                            VerticalAlignment="Bottom"/>
 
-            <TextBox Width="200"
-                         Height="50"
-                         x:Name="Wager"
-                         Grid.Column="0"
-                         Grid.Row="1"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Center"
-                         Style="{StaticResource WagerTextBox}"
-                         Text="{Binding Wager}"/>
+            <Border CornerRadius="10"
+                            Background="#404040"
+                            Width="200"
+                            Height="50"
+                            Grid.Row="1">
+
+                <Grid>
+
+                    <TextBox Margin="1"
+                                     Text="{Binding Wager}"
+                                     BorderThickness="0"
+                                     Padding="10"
+                                     VerticalContentAlignment="Center"
+                                     HorizontalContentAlignment="Center"
+                                     Background="Transparent"
+                                     Foreground="White"
+                                     x:Name="Wager"
+                                     FontSize="20"
+                                     />
+
+                    <TextBlock IsHitTestVisible="False"
+                                       Text="Wager"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Margin="0, 0, 0, 0"
+                                       FontSize="20"
+                                       Foreground="DarkGray"
+                                       Grid.Column="1">
+
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=Wager}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+
+                    <TextBlock IsHitTestVisible="False"
+                                       Text="$"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Left"
+                                       Margin="10, 0, 0, 0"
+                                       FontSize="20"
+                                       Foreground="White"
+                                       Grid.Column="1">
+
+                    </TextBlock>
+                </Grid>
+
+            </Border>
         </Grid>
         
         <!-- Odds Grid-->
@@ -184,15 +314,50 @@
                            HorizontalAlignment="Center"
                            VerticalAlignment="Bottom"/>
 
-            <TextBox Width="200"
-                         Height="50"
-                         x:Name="Odds"
-                         Grid.Column="0"
-                         Grid.Row="1"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Center"
-                         Style="{StaticResource OddsTextBox}"
-                         Text="{Binding Odds}"/>
+            <Border CornerRadius="10"
+                            Background="#404040"
+                            Width="200"
+                            Height="50"
+                            Grid.Row="1">
+
+                <Grid>
+                    <TextBox Margin="1"
+                                     Text="{Binding Odds}"
+                                     BorderThickness="0"
+                                     Padding="10"
+                                     VerticalContentAlignment="Center"
+                                     HorizontalContentAlignment="Center"
+                                     Background="Transparent"
+                                     Foreground="White"
+                                     x:Name="Odds"
+                                     FontSize="20"
+                                     />
+
+                    <TextBlock IsHitTestVisible="False"
+                                       Text="Odds"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Margin="0, 0, 0, 0"
+                                       FontSize="20"
+                                       Foreground="DarkGray"
+                                       Grid.Column="1">
+
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=Wager}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+
+
+                </Grid>
+
+            </Border>
         </Grid>
 
         <!-- Game Happened Grid -->
@@ -209,22 +374,22 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Label Content="Has the Game"
+            <Label Content="Did You Win"
                    Grid.ColumnSpan="2"
                            Foreground="White"
                            FontSize="40"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"/>
 
-            <Label Content="Happened?"
+            <Label Content="The Bet?"
                    Grid.ColumnSpan="2"
                            Foreground="White"
                            FontSize="40"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Bottom"/>
-            
+
             <RadioButton Style="{DynamicResource GameHappenedButtonYes}"
-                             x:Name="GameHappenedYes"
+                             x:Name="BetWinYes"
                              Width="100"
                              Height="75"
                              Grid.Column="0"
@@ -233,13 +398,15 @@
                              HorizontalContentAlignment="Center"
                              Foreground="White"
                              FontSize="24"
-                             GroupName="GameHappened"
+                             GroupName="BetWin"
+                             Content="Yes"
+                             IsChecked="{Binding BetWin, Converter={StaticResource RadioButtonToBool}, ConverterParameter='True'}"
+                             
                              >
-                             Yes
-                </RadioButton>
+            </RadioButton>
 
             <RadioButton Style="{DynamicResource GameHappenedButtonNo}" 
-                         x:Name="GameHappenedNo"
+                         x:Name="BetWinNo"
                          Width="100"
                          Height="75"
                          Grid.Column="1"
@@ -248,9 +415,10 @@
                          HorizontalContentAlignment="Center"
                          Foreground="White"
                          FontSize="24"
-                         GroupName="GameHappened"
+                         GroupName="BetWin"
+                         Content="No"
+                         IsChecked="{Binding BetWin, Converter={StaticResource RadioButtonToBool}, ConverterParameter='False'}"
                          >
-                         No
             </RadioButton>
         </Grid>
 

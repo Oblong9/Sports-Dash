@@ -16,10 +16,12 @@
         WindowStyle="None"
         ResizeMode="CanMinimize">
 
-    <Window.DataContext>
-        <viewModel:MainVM/>
-    </Window.DataContext>
+    <!--<Window.DataContext>
+        <viewModel:MainVM>
 
+        </viewModel:MainVM>
+    </Window.DataContext>
+-->
     <Border Background="#121212"
             CornerRadius="10">
         <Grid>

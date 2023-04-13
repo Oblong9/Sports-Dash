@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportsDash.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace SportsDash.View
         public StatView()
         {
             InitializeComponent();
+            this.DataContext = new StatsVM();
         }
     }
 }

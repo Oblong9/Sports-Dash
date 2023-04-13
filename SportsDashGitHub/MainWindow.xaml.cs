@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using SportsDash.Models.UserPack;
+using SportsDash.ViewModel;
+using System.Windows;
 
 namespace SportsDash
 {
@@ -8,11 +10,13 @@ namespace SportsDash
     public partial class MainWindow : Window
     {
 
-        public MainWindow()
-        {
+        public Account currentUser {get;set;}
 
+        public MainWindow(Account loggedInUser)
+        {
+            currentUser = loggedInUser;
             InitializeComponent();
-            
+            this.DataContext = new MainVM(currentUser);
         }
         private void CloseButton_Click(object sender, RoutedEventArgs e ) 
         {

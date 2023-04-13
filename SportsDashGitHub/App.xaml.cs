@@ -17,13 +17,14 @@ namespace SportsDash
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-
-            // Change to Sign in View After testing
-            SignupView Signup = new()
+            // SignupView stays open after signup when loginwindow is primary window please fix
+            // Something about the window opening anew window and the button does not close the right window Probablly because of MainWindow but idk
+            // Still not working fix it later - 3/20
+            LoginView Login = new()
             {
-                DataContext = new SignupVM()
+                DataContext = new SigninVM()
             };
-            Signup.Show();
+            Login.Show();
 
             base.OnStartup(e);
         }

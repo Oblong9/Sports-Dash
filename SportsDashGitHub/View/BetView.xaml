@@ -9,13 +9,9 @@
              d:DesignHeight="725" d:DesignWidth="1400">
     <UserControl.Resources>
         <vm:RadioButtonToBool x:Key="RadioButtonToBool"/>
+        <vm:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
-    <!--
-    <UserControl.DataContext>
-        <vm:BetVM/>
-    </UserControl.DataContext>
-    -->
-   
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -59,8 +55,6 @@
                   Foreground="White"
                   ItemsSource="{Binding Path=Leagues}"
                   SelectedItem="{Binding Path=selectedLeague}">
-                <!--<ComboBoxItem Content="NHL"/>
-                <ComboBoxItem Content="NBA"/> -->
             </ComboBox>
         </Grid>
         
@@ -423,6 +417,18 @@
         </Grid>
 
         <!-- Add button-->
+        <Label Grid.Column="1"
+               Grid.Row="2"
+               Content="Bet Added"
+               Foreground="Green"
+               FontSize="26"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Top"
+               Margin="30"
+               Height="60"
+               Visibility="{Binding BetAdded, Converter={StaticResource BooleanToVisibilityConverter}}"
+               />
+
         <Button x:Name="Add"
                 Content="Add"
                 Height="50"

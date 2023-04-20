@@ -60,6 +60,15 @@ namespace SportsDash.Models.SportsBookPack
             this.gameWinner = gameWinner;
             this.betWin = betWin;
             this.user = Account.GLOBALUSERNAME;
+
+            if (betWin == false)
+            {
+                winnings = (-1) * wager;
+            }
+            else
+            {
+                winnings = calculateWins(odds);
+            }
         }
 
         // Function for calculating the amount won including the wager

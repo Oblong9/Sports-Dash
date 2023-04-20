@@ -10,6 +10,8 @@ namespace SportsDash.Models.UserPack
     public class Account
     {
 
+
+        // For some reason this does not work when just setting up account try looking through VM
         public static string GLOBALUSERNAME = "";
 
         // Setup for Account class to connect to db
@@ -17,7 +19,6 @@ namespace SportsDash.Models.UserPack
         [BsonRepresentation(BsonType.ObjectId)]
         public string id { get; set; }
         
-
         [BsonElement("username")]
         public string userName { get; set; }
 

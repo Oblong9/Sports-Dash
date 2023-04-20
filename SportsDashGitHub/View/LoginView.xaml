@@ -13,11 +13,9 @@
         AllowsTransparency="True"
         WindowStyle="None"
         ResizeMode="CanMinimize">
-
-
-    <Window.DataContext>
-        <viewModel:SigninVM/>
-    </Window.DataContext>
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
     
     <Grid>
         <Border CornerRadius="10">
@@ -132,6 +130,19 @@
 
                 </StackPanel>
 
+                <!-- Used for hiding and showing failed login-->
+                <Label x:Name="LoginFailed"
+                       HorizontalAlignment="Center"
+                       Content="Log In Failed"
+                       Foreground="#BD2D3B"
+                       FontSize="26"
+                       Grid.Row="3"
+                       Margin="5"
+                       Height="50"
+                       VerticalAlignment="Top"
+                       Visibility="{Binding LoginFailed, Converter={StaticResource BooleanToVisibilityConverter}}"
+                       />
+                
                 <!-- When Login Button is clicked send to MainWindow using code from sneaky button-->
                 <Button x:Name="LoginButton"
                         Grid.Row="3"
@@ -143,7 +154,8 @@
                         Foreground="White"
                         FontWeight="Bold"
                         FontSize="20"
-                        Command="{Binding SubmitLoginButton}">
+                        Command="{Binding SubmitLoginButton}"
+                        Margin="0, 25, 0, 0">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Background" Value="#4642AB"/>

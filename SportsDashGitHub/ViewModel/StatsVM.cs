@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace SportsDash.ViewModel
         private readonly string Username = Account.GLOBALUSERNAME;
 
         private IMongoCollection<Bet> BetCollection;
+        private IMongoCollection<User> UserStatsCollection;
 
         private float winnings { get; set; }
         private float wager { get; set; }
@@ -28,7 +30,69 @@ namespace SportsDash.ViewModel
         private string awayTeam { get; set; }
         private string gameWinner { get; set; }
         private bool betWin { get; set; }
-        
+
+        // do the thing to set it public so it can be accessed by the statview and use {binding "name"} to get it to display the co
+        private int _gamesPlayed;
+        public int GamesPlayed
+        {
+            get { return _gamesPlayed; } 
+            set
+            {
+                _gamesPlayed = value;
+            }
+        }
+
+        private int _wins;
+        public int Wins
+        {
+            get { return _wins;}
+            set
+            {
+                _wins = value;
+            }
+        }
+
+        private int _losses;
+        public int Losses
+        {
+            get { return _losses; }
+            set
+            {
+                _losses = value;
+            }
+  
+        }
+
+        private float _totalEarned;
+        public float TotalEarned
+        {
+            get { return _totalEarned; }
+            set
+            {
+                _totalEarned = value;
+            }
+        }
+
+        private float _totalLost;
+        public float TotalLost
+        {
+            get { return _totalLost; }
+            set
+            {
+                _totalLost = value;
+            }
+        }
+
+        private float _net;
+        public float Net
+        {
+            get { return _net; }
+            set
+            {
+                _net = value;
+            }
+        }
+
 
         private ObservableCollection<Bet> _dbcontent { get; set; }
         public ObservableCollection<Bet> DBContent 
@@ -43,18 +107,22 @@ namespace SportsDash.ViewModel
         public StatsVM()
         { 
             DBContent = new ObservableCollection<Bet>();
-            
+
+            UserDataLoad();
+            LoadData();
+
+        }
+
+        public async Task LoadData()
+        {
+
             var connectionString = ConfigurationManager.ConnectionStrings["MongoDB"].ConnectionString;
             var client = new MongoClient(connectionString);
             var database = client.GetDatabase("sportsDash");
 
             BetCollection = database.GetCollection<Bet>("Bets");
-            
-            LoadData();
-        }
 
-        public async Task LoadData()
-        {
+            UserStatsCollection = database.GetCollection<User>("User Stats");
             var filter = Builders<Bet>.Filter.Eq("user", Username);
 
             try
@@ -63,7 +131,6 @@ namespace SportsDash.ViewModel
 
                 DBContent.Clear();
                 
-                // WORKS WELL JUST REMOVE THE WINDOWS.SYSTEM.WHATEVER PART OF THE STRING IN THIS SECTION WHEN LOAING FROM DB.
                 foreach (var result in results)
                 {
                     wager = result.wager;
@@ -79,13 +146,39 @@ namespace SportsDash.ViewModel
 
                     DBContent.Add(newBet);
                 }
+
             }
             catch (Exception ex)
             {
-                // Log the exception here
                 Debug.WriteLine($"Error in LoadData(): {ex.Message}");
             }
 
+        }
+
+        public void UserDataLoad()
+        {
+            var connectionString = ConfigurationManager.ConnectionStrings["MongoDB"].ConnectionString;
+            var client = new MongoClient(connectionString);
+            var database = client.GetDatabase("sportsDash");
+
+            UserStatsCollection = database.GetCollection<User>("User Stats");
+
+            var filter = Builders<User>.Filter.Eq("Username", Username);
+
+            try
+            {
+                var userResult = UserStatsCollection.Find(filter).First();
+                _gamesPlayed = userResult.gamesPlayed;
+                _wins = userResult.wins;
+                _losses = userResult.losses;
+                _totalEarned = userResult.totalEarn;
+                _totalLost = userResult.totalLost;
+                _net = _totalEarned + _totalLost;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error in LoadData(): {ex.Message}");
+            }
         }
     }
 }

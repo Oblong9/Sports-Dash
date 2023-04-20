@@ -1,5 +1,6 @@
 ﻿using MongoDB.Driver;
 using SportsDash.Models.UserPack;
+using SportsDash.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace SportsDash.View
         public LoginView()
         {
             InitializeComponent();
+            this.DataContext = new SigninVM();
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

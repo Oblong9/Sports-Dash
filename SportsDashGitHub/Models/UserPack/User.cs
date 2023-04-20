@@ -1,15 +1,32 @@
-﻿namespace SportsDash.Models.UserPack
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace SportsDash.Models.UserPack
 {
     public class User
     {
-        //public int Id { get; set; }
-        private string userName { get; set; }
-        private int wins { get; set; } = 0;
-        private int losses { get; set; } = 0;
-        private int gamesPlayed { get; set; } = 0;
-        private float totalEarn { get; set; } = 0.00F;
-        private float totalLost { get; set; } = 0.00F;
-        private float net { get; set; } = 0;
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string id { get; set; }
+
+        [BsonElement("Username")]
+        public string userName { get; set; }
+
+        [BsonElement("Wins")]
+        public int wins { get; set; } = 0;
+
+        [BsonElement("Losses")]
+        public int losses { get; set; } = 0;
+
+        [BsonElement("Games Played")]
+        public int gamesPlayed { get; set; } = 0;
+
+        [BsonElement("Total Earned")]
+        public float totalEarn { get; set; } = 0.00F;
+
+        [BsonElement("Total Lost")]
+        public float totalLost { get; set; } = 0.00F;
+
 
         // Used for new accounts
         public User(string userName)
@@ -17,7 +34,6 @@
             this.userName = userName;
         }
 
-        // Used to add existing accounts that lost data
         public User(string userName, int wins, int losses, int gamesPlayed, float totalEarn, float totalLost)
         {
             this.userName = userName;
@@ -26,7 +42,6 @@
             this.gamesPlayed = gamesPlayed;
             this.totalEarn = totalEarn;
             this.totalLost = totalLost;
-            net = totalEarn - totalLost;
         }
 
         public void addWin()
@@ -54,24 +69,9 @@
             gamesPlayed++;
         }
 
-        public void updateNet()
-        {
-            net = totalEarn - totalLost;
-        }
-
-        public void changeTotalEarn(float earned)
-        {
-            totalEarn += earned;
-        }
-
-        public void changeTotalLost(float loss)
-        {
-            totalLost -= loss;
-        }
-
         public override string ToString()
         {
-            return "User:\nUsername: " + userName + "\nWins: " + wins + "\nLosses: " + losses + "\nGames Played: " + gamesPlayed + "\nTotal Earned: " + totalEarn + "\nTotal Lost: " + totalLost + "\nNet: " + net;
+            return "User:\nUsername: " + userName + "\nWins: " + wins + "\nLosses: " + losses + "\nGames Played: " + gamesPlayed + "\nTotal Earned: " + totalEarn + "\nTotal Lost: " + totalLost;
         }
 
     }

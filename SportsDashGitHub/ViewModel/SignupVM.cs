@@ -21,6 +21,10 @@ namespace SportsDash.ViewModel
 
         //private readonly MongoDriver driver = new MongoDriver();
 
+        private IMongoCollection<User> userStatsCollection;
+
+        private User newUserStats { get; set; }
+
         private Account newAccount { get; set; }
 
         private String _email;
@@ -78,7 +82,9 @@ namespace SportsDash.ViewModel
         private void SubmitSignup(object parameter)
         {
             newAccount = new Account(_username, _password, _email);
+            newUserStats = new User(newAccount.userName);
             addAccount(newAccount);
+            addUserStats(newUserStats);
             /*if(main == null)
             {
                 main = new MainWindow();
@@ -98,10 +104,20 @@ namespace SportsDash.ViewModel
             Application.Current.MainWindow.Close();
         }
 
-        public async Task addAccount(Account account)
+        public void addAccount(Account account)
         {
-            await collection.InsertOneAsync(account);
+            collection.InsertOne(account);
         }
 
+        public void addUserStats(User user)
+        {
+            var connectionString = ConfigurationManager.ConnectionStrings["MongoDB"].ConnectionString;
+            var client = new MongoClient(connectionString);
+            var database = client.GetDatabase("sportsDash");
+            
+            userStatsCollection = database.GetCollection<User>("User Stats");
+
+            userStatsCollection.InsertOne(newUserStats);
+        }
     }
 }

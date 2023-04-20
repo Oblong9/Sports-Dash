@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using MongoDB.Driver;
 using SportsDash.Models.UserPack;
 using System.Configuration;
-using MongoDB.Bson;
 using SportsDash.Models.SportsBookPack;
-using SportsDash.ViewModel;
-using System.Diagnostics;
-using System.Threading;
-using System.Collections;
 using System.Collections.ObjectModel;
+using System.Threading;
+using System.Windows.Threading;
+using System.Windows;
 
 namespace SportsDash.ViewModel
 {
@@ -18,6 +15,8 @@ namespace SportsDash.ViewModel
     {
         private IMongoCollection<Bet> betCollection;
 
+        private IMongoCollection<User> userStatCollection;
+        
         private Account currentUser { get; set; }
 
         private Bet bet { get; set; }
@@ -124,7 +123,7 @@ namespace SportsDash.ViewModel
         }
 
         private String _selectedLeague;
-        
+
         public String selectedLeague
         {
             get { return _selectedLeague; }
@@ -135,7 +134,22 @@ namespace SportsDash.ViewModel
             }
         }
 
+        // Finish Adding this in just set to true when submit works and do a try catch maybe or if statement
+        private bool _betAdded = false;
+        public bool BetAdded
+        {
+            get { return _betAdded; }
+            set
+            {
+                _betAdded = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ICommand SubmitBetButton { get;}
+
+        private DispatcherTimer timer;
+
 
         public BetVM(Account currentUser)
         {
@@ -151,34 +165,66 @@ namespace SportsDash.ViewModel
             var database = client.GetDatabase("sportsDash");
 
             betCollection = database.GetCollection<Bet>("Bets");
-            
-            /*Task.Run(() =>
-            {
-                while (true)
-                {
-                    Debug.WriteLine($"Current User: ", currentUser);
-                    Thread.Sleep(1500);
-                }
-            });
-            */
                       
             SubmitBetButton = new RelayCommand(OnSubmit);
         }
 
-        private async void OnSubmit(object obj)
+        private void OnSubmit(object obj)
         {
-            // If no time show top 3 earns and losses on dashboard
+            // If no time, show top 3 earns and losses on dashboard
             // Use text in here that shows a green button when a bet is successfully added. Maybe a timer function to turn off after 5 seconds
-            // MAKE SURE TO PARSE THE NUMBERS ADDED FOR + AND - SO IT CAN BE USED TO CALCULATE THE ODDS BETTER, Currently only calculating + Odds
-            bet = new Bet(_wager, _odds, _selectedLeague, _team1, _team2, _selectedTeam, _betWin);
-            bet.winnings = bet.calculateWins(_odds);
+            bet = new Bet(_wager, _odds, _selectedLeague, _team1, _team2, _selectedTeam.Remove(0, 37).TrimStart(), _betWin);
+            betCollection.InsertOneAsync(bet);
+            updateUserStats();
 
-            await betCollection.InsertOneAsync(bet);
+            BetAdded = true;
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(3); // Show label for 5 seconds
+            timer.Tick += Timer_Tick;
+            timer.Start();
+
         }
 
-        public async Task addBet(Bet bet)
+        private void Timer_Tick(object sender, EventArgs e)
         {
-            await betCollection.InsertOneAsync(bet);
+            timer.Stop();
+            BetAdded = false;
+        }
+
+        public void updateUserStats()
+        {
+            var connectionString = ConfigurationManager.ConnectionStrings["MongoDB"].ConnectionString;
+            var client = new MongoClient(connectionString);
+            var database = client.GetDatabase("sportsDash");
+
+            userStatCollection = database.GetCollection<User>("User Stats");
+
+            var filter = Builders<User>.Filter.Eq("Username", Account.GLOBALUSERNAME);
+
+            var update = Builders<User>.Update.Inc("Games Played", 1);
+
+            if(_betWin == true)
+            {
+                update = update.Inc("Wins", 1)
+                               .Inc("Total Earned", bet.winnings);
+            }
+            else
+            {
+                update = update.Inc("Losses", 1)
+                               .Inc("Total Lost", -bet.wager);
+            }
+
+            var updateResult = userStatCollection.UpdateOne(filter, update);
+
+            if (updateResult.IsAcknowledged && updateResult.ModifiedCount > 0)
+            {
+                Console.WriteLine("Successful update");
+            }
+            else
+            {
+                Console.WriteLine("Update failed");
+            }
+
         }
     }
 }

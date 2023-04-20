@@ -5,6 +5,7 @@ using SportsDash.View;
 using System;
 using System.Configuration;
 using System.Diagnostics;
+using System.Reflection.Emit;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -42,13 +43,25 @@ namespace SportsDash.ViewModel
             }
         }
 
-        private String tempUserName { get; set; }
-
         private Account loggedInUser { get; set; }
+
+        private bool _loginFailed = false;
+        public bool LoginFailed
+        {
+            get { return _loginFailed; }
+            set
+            {
+                _loginFailed = value;
+                OnPropertyChanged();
+            }
+        }
 
         public RelayCommand SubmitSignupButton { get; }
 
-        public RelayCommand SubmitLoginButton { get; }
+        public RelayCommand SubmitLoginButton
+        {
+            get;
+        }
 
         public SigninVM()
         {
@@ -81,34 +94,34 @@ namespace SportsDash.ViewModel
             signUp.Show();
             Application.Current.MainWindow.Close();
         }
-        private async void SubmitLogin(object parameter)
+        private void SubmitLogin(object parameter)
         {
             var filter1 = Builders<Account>.Filter.Eq("username", Username);
             var filter2 = Builders<Account>.Filter.Eq("password", Password);
             var filter = Builders<Account>.Filter.And(filter1, filter2);
 
-            var result = await collection.Find(filter).FirstOrDefaultAsync();
-
-            if(result != null)
+            // Check if user and pass match
+            try
             {
-                // logged in user is not being created
-                //userId = result.id;
+                var result = collection.Find(filter).First();
+
                 Account.GLOBALUSERNAME = Username;
-                string[] resultString = result.ToString().Split(' ');
                 loggedInUser = new Account(Username);
-                
+
                 if (main == null)
                 {
                     main = new MainWindow(loggedInUser);
                 }
                 main.Show();
                 Application.Current.MainWindow.Close();
+
             }
-            else
+            catch
             {
-                //Setup popup that password and username are incorrect
+                LoginFailed = true;
             }
 
         }
+
     }
 }

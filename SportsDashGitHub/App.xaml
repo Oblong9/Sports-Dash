@@ -17,6 +17,10 @@
 
             <DataTemplate DataType="{x:Type viewModel:BetVM}">
                 <view:BetView/>
+            </DataTemplate>    
+            
+            <DataTemplate DataType="{x:Type viewModel:DashboardVM}">
+                <view:DashboardView/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModel:StatsVM}">
@@ -26,7 +30,7 @@
             <DataTemplate DataType="{x:Type viewModel:SignupVM}">
                 <view:SignupView/>
             </DataTemplate>
-           
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -2,16 +2,11 @@
 using SportsDash.Models.SportsBookPack;
 using SportsDash.Models.UserPack;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace SportsDash.ViewModel
 {
@@ -122,7 +117,7 @@ namespace SportsDash.ViewModel
 
             BetCollection = database.GetCollection<Bet>("Bets");
 
-            UserStatsCollection = database.GetCollection<User>("User Stats");
+            //UserStatsCollection = database.GetCollection<User>("User Stats");
             var filter = Builders<Bet>.Filter.Eq("user", Username);
 
             try

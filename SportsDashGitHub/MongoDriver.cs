@@ -21,7 +21,6 @@ namespace SportsDash
 
             if (client.Cluster.Description.State == MongoDB.Driver.Core.Clusters.ClusterState.Disconnected)
             {
-                // Handle the disconnected state
                 client = new MongoClient(connectionString);
             }
 

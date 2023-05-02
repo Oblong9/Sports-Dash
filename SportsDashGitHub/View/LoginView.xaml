@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SportsDash.View"
+        xmlns:viewModel="clr-namespace:SportsDash.ViewModel"
         mc:Ignorable="d"
         Title="LoginView" Height="800" Width="1400"
         WindowStartupLocation="CenterScreen"
@@ -12,6 +13,10 @@
         AllowsTransparency="True"
         WindowStyle="None"
         ResizeMode="CanMinimize">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+    
     <Grid>
         <Border CornerRadius="10">
             <Border.Background>
@@ -65,13 +70,30 @@
                            HorizontalAlignment="Center"
                            FontSize="26"/>
 
-                    <TextBox
+                    <Border CornerRadius="10"
+                            Background="#404040"
+                            Width="400"
+                            Height="50">
+
+                        <TextBox
                          x:Name="UsernameTextBox"
+                         Width="400"
+                         Height="50"
                          Grid.Column="0"
                          Grid.Row="1"
+                         BorderThickness="0"
+                         Padding="10"
+                         Margin="1"
+                         VerticalContentAlignment="Center"
+                         HorizontalContentAlignment="Center"
+                         Background="Transparent"
+                         Foreground="White"
                          HorizontalAlignment="Center"
-                         Style="{StaticResource LoginTextBox}"
+                         FontSize="20"
+                         Text="{Binding Username}"
                          />
+
+                    </Border>
 
                 </StackPanel>
 
@@ -81,28 +103,59 @@
                            HorizontalAlignment="Center"
                            FontSize="26"/>
 
-                    <TextBox
+                    <Border CornerRadius="10"
+                            Background="#404040"
+                            Width="400"
+                            Height="50">
+
+                        <TextBox
                          x:Name="PasswordTextBox"
+                         Width="400"
+                         Height="50"
                          Grid.Column="0"
                          Grid.Row="1"
+                         BorderThickness="0"
+                         Padding="10"
+                         Margin="1"
+                         VerticalContentAlignment="Center"
+                         HorizontalContentAlignment="Center"
+                         Background="Transparent"
+                         Foreground="White"
                          HorizontalAlignment="Center"
-                         Style="{StaticResource LoginTextBox}"
+                         FontSize="20"
+                         Text="{Binding Password}"
                          />
 
+                    </Border>
+
                 </StackPanel>
-                    
-                <!-- When Login Button is clicked send to MainWindow using code from sneaky button-->
+
+                <!-- Used for hiding and showing failed login-->
+                <Label x:Name="LoginFailed"
+                       HorizontalAlignment="Center"
+                       Content="Log In Failed"
+                       Foreground="#BD2D3B"
+                       FontSize="26"
+                       Grid.Row="3"
+                       Margin="5"
+                       Height="50"
+                       VerticalAlignment="Top"
+                       Visibility="{Binding LoginFailed, Converter={StaticResource BooleanToVisibilityConverter}}"
+                       />
                 
-                <Button x:Name="SignInButton"
+                <!-- When Login Button is clicked send to MainWindow using code from sneaky button-->
+                <Button x:Name="LoginButton"
                         Grid.Row="3"
-                        Content="Sign In"
+                        Content="Log In"
                         Width="300"
                         Height="50"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"
                         Foreground="White"
                         FontWeight="Bold"
-                        FontSize="20">
+                        FontSize="20"
+                        Command="{Binding SubmitLoginButton}"
+                        Margin="0, 25, 0, 0">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Background" Value="#4642AB"/>
@@ -141,7 +194,8 @@
                         Foreground="White"
                         FontWeight="Bold"
                         FontSize="20"
-                        Margin="0, 15, 0, 0" Click="SignUpButton_Click">
+                        Margin="0, 15, 0, 0"
+                        Command="{Binding SubmitSignupButton}">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="Background" Value="#356E3B"/>
@@ -168,13 +222,6 @@
 
             </Grid>
         </Border>
-
-        <Button x:Name="SneakyButton" 
-                Content="Sneaky Button"
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="Right"
-                Margin="25" Click="SneakyButton_Click"
-                />
 
         <Button Content="Exit" 
                 FontSize="18" 
@@ -207,5 +254,25 @@
             </Button.Style>
         </Button>
 
+        <Popup x:Name="Popup"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Width="400"
+            Height="150"
+            IsOpen="False"
+            Placement="Center">
+            <StackPanel>
+                <TextBlock Text="The usernanme and password are incorrect" 
+                       Height="100"
+                       FontSize="20" 
+                       Foreground="White" 
+                       Background="#353535" 
+                       TextAlignment="Center"/>
+                <Button Content="Close"
+                        Width="400">
+                    
+                </Button>
+            </StackPanel>
+        </Popup>
     </Grid>
 </Window>

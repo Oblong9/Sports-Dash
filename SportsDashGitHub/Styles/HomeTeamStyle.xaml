@@ -12,9 +12,10 @@
                             Height="50">
 
                         <Grid>
-
+                        <!-- -->
                             <TextBox Margin="1"
-                                     Text="{TemplateBinding Text}"
+                                     Text="{Binding Content,
+                                    RelativeSource={RelativeSource TemplatedParent}}"
                                      BorderThickness="0"
                                      Padding="10"
                                      VerticalContentAlignment="Center"

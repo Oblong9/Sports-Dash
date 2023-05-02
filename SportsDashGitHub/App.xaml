@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:SportsDash"
              xmlns:viewModel="clr-namespace:SportsDash.ViewModel"
-             xmlns:view="clr-namespace:SportsDash.View"
-             StartupUri="/View/LoginView.xaml">
+             xmlns:view="clr-namespace:SportsDash.View">
+    
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -17,10 +17,18 @@
 
             <DataTemplate DataType="{x:Type viewModel:BetVM}">
                 <view:BetView/>
+            </DataTemplate>    
+            
+            <DataTemplate DataType="{x:Type viewModel:DashboardVM}">
+                <view:DashboardView/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModel:StatsVM}">
                 <view:StatView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:SignupVM}">
+                <view:SignupView/>
             </DataTemplate>
 
         </ResourceDictionary>

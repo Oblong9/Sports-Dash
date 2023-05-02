@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SportsDash.View;
+using SportsDash.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +15,16 @@ namespace SportsDash
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+
+            LoginView Login = new()
+            {
+                DataContext = new SigninVM()
+            };
+            Login.Show();
+
+            base.OnStartup(e);
+        }
     }
 }

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SportsDash.View"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="725" d:DesignWidth="1400">
     <Grid>
@@ -14,29 +15,68 @@
 
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="275"/>
+                <RowDefinition Height="275"/>
+            </Grid.RowDefinitions
+                >
+            <Label Content="User Stats"
+                   FontSize="30"
+                   Foreground="White"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
 
-            <Label Foreground="White" FontSize="40" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0">
-                Active Bets
-            </Label>
+            <lvc:CartesianChart Series="{Binding ColumnSeries1}"
+                                Grid.Row="1"
+                                Height="250"
+                                Margin="5">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="  Wins | Losses" Margin="5"/>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Games" Margin="5" FontSize="14"/>
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
 
-            <Label Foreground="White" FontSize="40" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1">
-                Past Bets
-            </Label>
+            <lvc:CartesianChart Series="{Binding ColumnSeries2}"
+                                Grid.Row="2"
+                                Height="250"
+                                Margin="5">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Gain | Loss" Margin="5"/>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Money $" Margin="5" FontSize="14"/>
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
         </Grid>
-        
+
         <Grid Grid.Column="1">
+
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="600"/>
             </Grid.RowDefinitions>
+
+            <Label Content="Profit"
+                   FontSize="30"
+                   Foreground="White"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+
+            <lvc:CartesianChart Series="{Binding LineSeries}"
+                                Grid.Row="1"
+                                Height="550"
+                                Margin="10, 5, 10, 40">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Games" Margin="5"  FontSize="14"/>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Money Won or Lost" Margin="5" FontSize="14"/>
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
+            
         </Grid>
-        
-
-
 
     </Grid>
 </UserControl>

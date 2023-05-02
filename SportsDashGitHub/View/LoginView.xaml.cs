@@ -1,6 +1,10 @@
-﻿using System;
+﻿using MongoDB.Driver;
+using SportsDash.Models.UserPack;
+using SportsDash.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,25 +26,13 @@ namespace SportsDash.View
         public LoginView()
         {
             InitializeComponent();
-        }
-
-        private void SneakyButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-            this.Hide();
-        }
-
-        private void SignUpButton_Click(object sender, RoutedEventArgs e)
-        {
-            SignupView signupView = new SignupView();
-            signupView.Show();
-            this.Hide();
+            this.DataContext = new SigninVM();
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
+
     }
 }

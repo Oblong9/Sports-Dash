@@ -4,39 +4,287 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SportsDash.View"
+             xmlns:vm="clr-namespace:SportsDash.ViewModel" d:DataContext="{d:DesignInstance Type=vm:StatsVM}"
              mc:Ignorable="d" 
              d:DesignHeight="725" d:DesignWidth="1400">
+
     <StackPanel>
-        
+
         <Label Content="Bet History"
                Foreground="White"
-               FontSize="20"
+               FontSize="26"
                FontWeight="Bold"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
-               Margin="10"
+               Margin="5"
                />
 
-        <Border BorderThickness="1"
-                BorderBrush="White">
-            <ScrollViewer   Height="350"
-                        Margin="5, 20, 0, 20"
-                        VerticalScrollBarVisibility="Auto">
-                <Grid Margin="0, 0, 5, 0"
-                      ShowGridLines="True"
-                      >
+        <ListView ItemsSource="{Binding DBContent}"
+                  Background="Transparent"
+                  Margin="5, 0, 5, 0"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  BorderBrush="White"
+                  Height="400">
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="FontSize" Value="20"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <Border BorderBrush="Transparent"
+                                        BorderThickness="0"
+                                        Background="{TemplateBinding Background}"> 
+                                    <GridViewRowPresenter HorizontalAlignment="Stretch" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Width="Auto" Margin="0" Content="{TemplateBinding Content}"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ListView.View>
+
+                <GridView>
+
+                    <GridView.ColumnHeaderContainerStyle>
+                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="Padding" Value="5"/>
+                            <Setter Property="BorderBrush" Value="White"/>
+                            <Setter Property="Height" Value="50"/>
+                            <Setter Property="FontSize" Value="20"/>
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="TextElement.Foreground" Value="White"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </GridView.ColumnHeaderContainerStyle>
+                    <GridViewColumn Header="Wager" Width="175">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding wager}" 
+                                           TextAlignment="Center"
+                                           HorizontalAlignment="Stretch"
+                                           Foreground="White"
+                                           Background="Transparent"
+                                           />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding odds}" Header="Odds" Width="175"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding winnings}" Header="Winnings" Width="170"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding league}" Header="League" Width="150"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding team1}" Header="Home Team" Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding team2}" Header="Away Team" Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding gameWinner}" Header="Game Winner" Width="170"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding betWin}" Header="Bet Won?" Width="110"/>
+                </GridView>
+                
+            </ListView.View>
+            
+        </ListView>
+
+        <Grid Margin="5, 20, 5, 20"
+              Height="175">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
 
-                </Grid>
-            </ScrollViewer>
-        </Border>
+            <Border Grid.Row="0"
+                    Grid.Column="0"
+                    BorderBrush="White"
+                    BorderThickness="1">
+                <Label 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontWeight="Bold"
+                   Content="Net Earnings"
+                   FontSize="26"
+                   Foreground="White"/>
+
+            </Border>
+
+
+
+            <Border Grid.Row="0"
+                    Grid.Column="1"
+                    BorderBrush="White"
+                    BorderThickness="1">
+                <Label 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontWeight="Bold"
+                   Content="Money Won"
+                   FontSize="26"
+                   Foreground="#276A24"/>
+
+            </Border>
         
-        <Grid Margin="5, 20, 5, 20">
+            <Border Grid.Row="0"
+                    Grid.Column="2"
+                    BorderBrush="White"
+                    BorderThickness="1">
+                <Label 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontWeight="Bold"
+                   Content="Money Lost"
+                   FontSize="26"
+                   Foreground="#871D27"/>
 
+            </Border>
+                    
+            <Border Grid.Row="0"
+                    Grid.Column="3"
+                    BorderBrush="White"
+                    BorderThickness="1">
+                
+                <Label 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontWeight="Bold"
+                   Content="Wins"
+                   FontSize="26"
+                   Foreground="#276A24"/>
+
+            </Border>  
+        
+            <Border Grid.Row="0"
+                    Grid.Column="4"
+                    BorderBrush="White"
+                    BorderThickness="1">
+                
+                <Label 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontWeight="Bold"
+                   Content="Losses"
+                   FontSize="26"
+                   Foreground="#871D27"/>
+
+            </Border>
+
+            <Border Grid.Row="0"
+                    Grid.Column="5"
+                    BorderBrush="White"
+                    BorderThickness="1">
+
+                <Label 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontWeight="Bold"
+                   Content="Games Played"
+                   FontSize="26"
+                   Foreground="White"/>
+
+            </Border>
+
+            <Border Grid.Row="1"
+                    Grid.Column="0"
+                    BorderBrush="White"
+                    BorderThickness="1">
+                <Label Foreground="White"
+                         Background="Transparent"
+                         BorderBrush="Transparent"
+                         Content="{Binding Net}"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Center"
+                         FontSize="24"/>
+
+            </Border>
+            
+            <Border Grid.Row="1"
+                    Grid.Column="1"
+                    BorderBrush="White"
+                    BorderThickness="1">
+                <Label Foreground="#276A24"
+                         Background="Transparent"
+                         BorderBrush="Transparent"
+                         Content="{Binding TotalEarned}"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Center"
+                         FontSize="24"/>
+
+            </Border>        
+            
+            <Border Grid.Row="1"
+                    Grid.Column="2"
+                    BorderBrush="White"
+                    BorderThickness="1">
+                <Label Foreground="#871D27"
+                         Background="Transparent"
+                         BorderBrush="Transparent"
+                         Content="{Binding TotalLost}"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Center"
+                         FontSize="24"/>
+
+            </Border>
+            
+            <Border Grid.Row="1"
+                    Grid.Column="3"
+                    BorderBrush="White"
+                    BorderThickness="1">
+                <Label Foreground="#276A24"
+                         Background="Transparent"
+                         BorderBrush="Transparent"
+                         Content="{Binding Wins}"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Center"
+                         FontSize="24"/>
+
+            </Border>
+
+            <Border Grid.Row="1"
+                    Grid.Column="4"
+                    BorderBrush="White"
+                    BorderThickness="1">
+                <Label Foreground="#871D27"
+                         Background="Transparent"
+                         BorderBrush="Transparent"
+                         Content="{Binding Losses}"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Center"
+                         FontSize="24"/>
+
+            </Border>
+
+            <Border Grid.Row="1"
+                    Grid.Column="5"
+                    BorderBrush="White"
+                    BorderThickness="1">
+                <Label Foreground="White"
+                         Background="Transparent"
+                         BorderBrush="Transparent"
+                         Content="{Binding GamesPlayed}"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Center"
+                         FontSize="24"/>
+
+            </Border>
         </Grid>
 
-        <!-- Scroll Viewer Like the Comp 269 Project-->
-        
-            
     </StackPanel>
 </UserControl>
